@@ -96,6 +96,7 @@ export function dismissGuide() { guideDismissed = true; notify(); }
 
 // ── Debug ──
 export let debugVisible = false;
+export let danmakuVisible = false;
 export let aiPaused = false;
 export let aiSpeedValue = 25; // 0-100 slider, default ~25 (8-15s range)
 // Stored ceremony state for replay
@@ -900,6 +901,11 @@ export function checkDivination() {
 // ── Debug ──
 export function toggleDebug() {
   debugVisible = !debugVisible;
+  notify();
+}
+
+export function toggleDanmaku() {
+  danmakuVisible = !danmakuVisible;
   notify();
 }
 

@@ -150,6 +150,15 @@ export function DebugPanel() {
         </div>
       </Section>
 
+      {/* UI Toggles */}
+      <Section title="UI 開關">
+        <div className="debug-buttons">
+          <button onClick={store.toggleDanmaku}>
+            {store.danmakuVisible ? '● 彈幕ON' : '○ 彈幕OFF'}
+          </button>
+        </div>
+      </Section>
+
       {/* Data Controls */}
       <Section title="資料">
         <div className="debug-buttons">

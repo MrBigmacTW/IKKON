@@ -188,8 +188,8 @@ export function BeastPage() {
       {/* Divination */}
       <Divination />
 
-      {/* Danmaku */}
-      <Danmaku />
+      {/* Danmaku — hidden by default, toggle via Debug Panel */}
+      {store.danmakuVisible && <Danmaku />}
 
       <Notifications />
     </div>

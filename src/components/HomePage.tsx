@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useStore } from '../hooks/useStore';
 import * as store from '../store/gameStore';
 import { RARITY_LABELS } from '../types';
@@ -16,6 +17,7 @@ const BEAST_IMAGES: Record<string, string> = {
 
 export function HomePage() {
   useStore();
+  const [guideOpen, setGuideOpen] = useState(false);
 
   const allBeasts = store.getAllBeasts();
 
@@ -23,6 +25,7 @@ export function HomePage() {
     <div className="page home-page">
       <header className="header">
         <h1><Swords size={28} className="icon-inline" /> 一刀入魂 IKKON</h1>
+        <button className="guide-toggle-btn" onClick={() => setGuideOpen(o => !o)} title="遊戲說明">?</button>
       </header>
 
       <div className="stats-bar">
@@ -30,8 +33,8 @@ export function HomePage() {
         <span>總入魂次數：{store.playerTotalJoins} 次</span>
       </div>
 
-      {/* Quick Guide for new users */}
-      {!store.guideDismissed && (
+      {/* Quick Guide — collapsed by default */}
+      {guideOpen && (
         <div className="guide-card">
           <h3><BookOpen size={16} className="icon-inline" /> 快速指南</h3>
           <ul className="guide-steps">
@@ -41,7 +44,7 @@ export function HomePage() {
             <li className="guide-step"><Flame size={14} className="icon-inline" /> 不要的掉落品可熔煉成魂幣</li>
           </ul>
           <div className="guide-dismiss">
-            <button className="btn btn-small btn-secondary" onClick={() => store.dismissGuide()}>了解</button>
+            <button className="btn btn-small btn-secondary" onClick={() => setGuideOpen(false)}>收起</button>
           </div>
         </div>
       )}
