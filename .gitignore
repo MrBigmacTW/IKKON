@@ -1,31 +1,7 @@
-# IKKON 一抽入魂 — 設計軍規
-
-## 視覺方向（不可妥協）
-- 主題：武俠刀劍 × 格鬥遊戲 HUD
-- 色彩系統：
-  --color-bg: #0a0a0a
-  --color-primary: #c8102e     /* 熱血硃紅 */
-  --color-accent: #e8d5a3      /* 刀鋒金 */
-  --color-surface: #1a1a1a
-  --color-text: #f0ece0
-- 字體：Noto Serif TC（中文）+ Bebas Neue（數字/英文 HUD）
-- 動畫：重擊感，不輕飄。用 CSS keyframes 或 Framer Motion
-- 記憶點：出刀瞬間畫面震動 + 紅光閃爍
-
-## 禁止事項
-- 不用 Inter / system-ui / Roboto
-- 不用圓角超過 8px 的軟 UI
-- 不用紫色漸層
-- 不做沒有動畫的靜態卡片
-- 不做置中對齊的無聊 layout
-
-## Tech Stack
-- React + TypeScript + Vite
-- 樣式：CSS Modules 或 Tailwind（擇一，保持一致）
-- 動畫：Framer Motion（需要先 npm install framer-motion）
-- 不引入不必要的 UI library
-
-## 改動規則
-- 每次只改一個 component
-- 改完必須問我是否確認再繼續
-- 新功能先建 ComponentName.new.tsx，不動原檔
+node_modules/
+dist/
+.env
+.env.*
+*.local
+.DS_Store
+.skills/
