@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useStore } from '../hooks/useStore';
 import * as store from '../store/gameStore';
 import { BLADE_MASTERS } from '../data/blademasters';
-import { RARITY_COLORS, RARITY_ICONS, RARITY_LABELS } from '../types';
+import { RARITY_LABELS } from '../types';
 import type { Rarity } from '../types';
+import { Sparkles, Check, ClassIcon, RarityDot } from './Icons';
 
 export function Divination() {
   useStore();
@@ -21,12 +22,12 @@ export function Divination() {
   return (
     <div className="divination">
       <button className="divination-toggle" onClick={() => setExpanded(!expanded)}>
-        🔮 魂占 {hasBet ? '（已下注）' : ''}
+        <Sparkles size={16} className="icon-inline" /> 魂占 {hasBet ? '（已下注）' : ''}
       </button>
 
       {expanded && (
         <div className="divination-panel">
-          <h3>🔮 魂占</h3>
+          <h3><Sparkles size={16} className="icon-inline" /> 魂占</h3>
           <p className="div-desc">猜猜誰是天選之人？</p>
           <div className="div-info">
             <span>費用：5 魂幣</span>
@@ -35,13 +36,15 @@ export function Divination() {
 
           {hasBet && betChar ? (
             <div className="div-bet-result">
-              <div className="div-bet-char">
-                <span className="div-bet-emoji">{betChar.emoji}</span>
-                <span style={{ color: RARITY_COLORS[betChar.rarity] }}>{betChar.name}</span>
+              <div className="div-bet-char" data-rarity={betChar.rarity}>
+                <span className="div-bet-icon">
+                  <ClassIcon cls={betChar.class} size={24} />
+                </span>
+                <span>{betChar.name}</span>
               </div>
-              <div className="div-bet-status">已下注 ✅</div>
+              <div className="div-bet-status"><Check size={14} className="icon-inline" /> 已下注</div>
               {store.divinationResult === 'correct' && (
-                <div className="div-win">🔮 預言成真！+30 魂幣！</div>
+                <div className="div-win"><Sparkles size={14} className="icon-inline" /> 預言成真！+30 魂幣！</div>
               )}
               {store.divinationResult === 'wrong' && (
                 <div className="div-lose">預言未中...下次再來</div>
@@ -55,12 +58,15 @@ export function Divination() {
                   <button
                     key={bm.id}
                     className="div-char-btn"
+                    data-rarity={bm.rarity}
                     onClick={() => store.placeDivination(bm.id)}
                     disabled={store.playerSoulCoins < 5}
                   >
-                    <span>{bm.emoji}</span>
-                    <span style={{ color: RARITY_COLORS[bm.rarity], fontSize: '11px' }}>
-                      {RARITY_ICONS[bm.rarity as Rarity]}{RARITY_LABELS[bm.rarity as Rarity]}
+                    <span>
+                      <ClassIcon cls={bm.class} size={18} />
+                    </span>
+                    <span>
+                      <RarityDot rarity={bm.rarity as Rarity} size={6} /> {RARITY_LABELS[bm.rarity as Rarity]}
                     </span>
                     <span className="div-char-name">{bm.name}</span>
                   </button>

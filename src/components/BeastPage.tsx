@@ -1,10 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { useStore } from '../hooks/useStore';
 import * as store from '../store/gameStore';
-import { RARITY_LABELS, RARITY_ICONS, RARITY_COLORS } from '../types';
+import { RARITY_LABELS } from '../types';
 import { Notifications } from './Notifications';
 import { Danmaku } from './Danmaku';
 import { Divination } from './Divination';
+import { Heart, Clock, Trophy, Swords, Megaphone, Flame, ChevronLeft, ClassIcon, RarityDot } from './Icons';
+
+const BEAST_IMAGES: Record<string, string> = {
+  flame_dragon: '/assets/beasts/flame_dragon.png',
+  nine_tail_fox: '/assets/beasts/nine_tail_fox.png',
+  frost_wolf: '/assets/beasts/frost_wolf.png',
+  thunder_eagle: '/assets/beasts/thunder_eagle.png',
+  skeleton_giant: '/assets/beasts/skeleton_giant.png',
+};
 
 export function BeastPage() {
   useStore();
@@ -17,6 +26,8 @@ export function BeastPage() {
   const canJoin = store.playerJoinsThisRaid < 3 && store.raid.status === 'recruiting';
   const lowHP = store.isLowHP();
   const lastSlot = store.isLastSlot();
+
+  const beastImg = BEAST_IMAGES[beast.id];
 
   // Recent joins (last 8, sorted by time)
   const recentJoins = [...store.raid.participants]
@@ -34,49 +45,52 @@ export function BeastPage() {
   const hpBarClass = `hp-bar hp-bar-large${lowHP ? ' hp-low' : ''}${lastSlot ? ' hp-critical' : ''}`;
 
   return (
-    <div className={`page${lastSlot ? ' page-critical' : ''}`}>
+    <div className={`page beast-page${lastSlot ? ' page-critical' : ''}`} data-beast={beast.id}>
       <div className="top-bar">
-        <button className="btn-back" onClick={() => store.navigate('home')}>← 返回</button>
-        <span className="page-title">{beast.emoji} 災獸・{beast.name} #{store.raid.raidNumber}</span>
+        <button className="btn-back" onClick={() => store.navigate('home')}><ChevronLeft size={18} /> 返回</button>
+        <span className="page-title">災獸・{beast.name} #{store.raid.raidNumber}</span>
       </div>
 
       {/* HP Bar */}
       <div className="beast-status">
         <div className={hpBarClass}>
           <div className="hp-fill" style={{ width: `${(filled / total) * 100}%` }} />
-          <span className="hp-text">❤️ {filled}/{total}</span>
+          <span className="hp-text"><Heart size={14} className="icon-inline" /> {filled}/{total}</span>
         </div>
         <div className="beast-meta">
-          <span>❤️ 魂力 {filled}/{total}<span className="info-hint">(填滿即開獎)</span></span>
-          <span>⏱️ {store.formatTime(store.raid.timeRemaining)}<span className="info-hint">(時限內未滿可退款)</span></span>
-          <span>🏆 {beast.prize}</span>
+          <span><Heart size={13} className="icon-inline" /> 魂力 {filled}/{total}<span className="info-hint">(填滿即開獎)</span></span>
+          <span><Clock size={13} className="icon-inline" /> {store.formatTime(store.raid.timeRemaining)}<span className="info-hint">(時限內未滿可退款)</span></span>
+          <span><Trophy size={13} className="icon-inline" /> {beast.prize}</span>
         </div>
       </div>
 
       {/* Low HP warnings */}
       {lowHP && !lastSlot && (
         <div className="warning-banner">
-          🔥 災獸即將倒下！最後 {remaining} 格！
+          <Flame size={16} className="icon-inline" /> 災獸即將倒下！最後 {remaining} 格！
         </div>
       )}
       {lastSlot && (
         <div className="warning-banner critical-banner">
-          ⚔️ 最後 1 格！即將開獎！
+          <Swords size={18} className="icon-inline" /> 最後 1 格！即將開獎！
         </div>
       )}
 
       {/* Beast visual area */}
       <div className="beast-arena">
-        <div className={`beast-big-emoji${store.beastShaking ? ' beast-shake' : ''}`}>
-          {beast.emoji}
-        </div>
+        <div className="beast-arena-overlay" />
+        <img
+          src={beastImg}
+          alt={beast.name}
+          className={`beast-art${store.beastShaking ? ' beast-shake' : ''}`}
+        />
         <div className="participant-grid">
           {store.raid.participants.map((p) => {
             const isLegend = p.rarity === 'legend';
             const isAttacking = store.attackingParticipantId === p.id;
             const isPlayer = !p.isAI;
             const classes = [
-              'participant-emoji',
+              'participant-icon',
               isPlayer ? 'player-self' : '',
               isLegend ? 'legend-glow' : '',
               isAttacking ? 'attacking' : '',
@@ -87,9 +101,10 @@ export function BeastPage() {
                 key={p.id}
                 className={classes}
                 title={`${p.blademaster.name}(${p.playerName})`}
+                data-rarity={p.rarity}
                 style={{ animationDelay: `${Math.random() * 3}s` }}
               >
-                {p.blademaster.emoji}
+                <ClassIcon cls={p.blademaster.class} size={18} />
               </span>
             );
           })}
@@ -98,7 +113,7 @@ export function BeastPage() {
 
       {/* Battle Log */}
       <div className="battle-log" ref={logRef}>
-        <div className="battle-log-header">⚔️ 戰錄</div>
+        <div className="battle-log-header"><Swords size={14} className="icon-inline" /> 戰錄</div>
         <div className="battle-log-entries">
           {store.battleLog.slice(0, 15).map((entry) => (
             <div
@@ -117,11 +132,11 @@ export function BeastPage() {
         {beast.slots.map((slot) => {
           const rem = store.getRemainingSlots(slot.rarity);
           return (
-            <div key={slot.rarity} className="slot-row">
-              <span className="slot-icon" style={{ color: RARITY_COLORS[slot.rarity] }}>
-                {RARITY_ICONS[slot.rarity]}
+            <div key={slot.rarity} className="slot-row" data-rarity={slot.rarity}>
+              <span className="slot-icon">
+                <RarityDot rarity={slot.rarity} />
               </span>
-              <span className="slot-label" style={{ color: RARITY_COLORS[slot.rarity] }}>
+              <span className="slot-label">
                 {RARITY_LABELS[slot.rarity]}
               </span>
               <span className="slot-price">{slot.price}元</span>
@@ -141,7 +156,7 @@ export function BeastPage() {
             className={`btn btn-primary btn-large${lastSlot ? ' btn-pulse' : ''}`}
             onClick={() => store.navigate('select')}
           >
-            ⚔️ {store.playerJoinsThisRaid === 0 ? '選擇刀客，入魂！' : `再入魂一刀！（${store.playerJoinsThisRaid}/3）`}
+            <Swords size={18} className="icon-inline" /> {store.playerJoinsThisRaid === 0 ? '選擇刀客，入魂！' : `再入魂一刀！（${store.playerJoinsThisRaid}/3）`}
           </button>
         ) : (
           <button className="btn btn-disabled btn-large" disabled>
@@ -155,13 +170,13 @@ export function BeastPage() {
 
       {/* Recent joins */}
       <div className="recent-joins">
-        <h3>📢 最近入魂：</h3>
+        <h3><Megaphone size={14} className="icon-inline" /> 最近入魂：</h3>
         {recentJoins.map((p) => {
           const ago = Math.floor((Date.now() - p.joinedAt) / 1000);
           return (
             <div key={p.id} className="recent-item">
-              <span style={{ color: RARITY_COLORS[p.rarity as keyof typeof RARITY_COLORS] }}>
-                {p.blademaster.emoji} {p.blademaster.name}
+              <span className="recent-char" data-rarity={p.rarity}>
+                <ClassIcon cls={p.blademaster.class} size={14} /> {p.blademaster.name}
               </span>
               <span className="recent-name">({p.playerName})</span>
               <span className="recent-time">{ago < 60 ? `${ago}秒前` : `${Math.floor(ago / 60)}分前`}</span>

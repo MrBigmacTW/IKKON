@@ -62,6 +62,7 @@ export interface InventoryItem {
   meltValue: number;
   characterName: string;
   characterEmoji: string;
+  characterClass: string;
   isMelted: boolean;
 }
 export let inventory: InventoryItem[] = [];
@@ -79,7 +80,7 @@ export let danmakuList: DanmakuItem[] = [];
 let danmakuId = 0;
 let aiDanmakuTimerId: ReturnType<typeof setTimeout> | null = null;
 
-const AI_DANMAKU_EMOJIS = ['😱', '🔥', '🎉', '😭', '💪', '🤣', '👏', '⚔️', '🐉', '💀', '😍', '🫡'];
+const AI_DANMAKU_EMOJIS = ['😱', '🔥', '🎉', '😭', '💪', '🤣', '👏', '😍', '🫡', '💯', '🙏', '👀'];
 const AI_DANMAKU_SHOUTS = ['加油！', '衝啊！', '太強了', '穩穩的', '我要中', '斬！', '讚讚讚', '好猛', '拜託了', '必中！'];
 
 // ── Soul Burst effect ──
@@ -476,6 +477,14 @@ function getBeastAttacks(): string[] {
   return BEAST_ATTACKS_MAP[currentBeast.id] || BEAST_ATTACKS_MAP.flame_dragon;
 }
 
+const CLASS_TAGS: Record<string, string> = {
+  sword: '⟐',
+  mage: '◈',
+  archer: '⟁',
+  tank: '⬡',
+  support: '✦',
+};
+
 const DAMAGE_RANGES: Record<string, [number, number]> = {
   common: [2000, 8000],
   rare: [5000, 12000],
@@ -501,7 +510,8 @@ function generateBattleLogEntry(): BattleLogEntry | null {
 
   const dmgText = dmg.toLocaleString();
   const critText = isCrit ? '（暴擊！）' : '';
-  const text = `${p.blademaster.emoji} ${line}造成 ${dmgText} 傷害！${critText}`;
+  const classTag = CLASS_TAGS[p.blademaster.class] || '◆';
+  const text = `${classTag} ${line}造成 ${dmgText} 傷害！${critText}`;
 
   let color = '#e0e0e0';
   if (isCrit) color = '#ffd700';
@@ -648,6 +658,7 @@ export function triggerRewardCeremony() {
       meltValue: cfg.meltValue,
       characterName: p.blademaster.name,
       characterEmoji: p.blademaster.emoji,
+      characterClass: p.blademaster.class,
       isMelted: false,
     };
   });
@@ -1007,6 +1018,7 @@ export function debugForceWin() {
         meltValue: cfg.meltValue,
         characterName: p.blademaster.name,
         characterEmoji: p.blademaster.emoji,
+        characterClass: p.blademaster.class,
         isMelted: false,
       };
     });

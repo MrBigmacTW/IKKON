@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useStore } from '../hooks/useStore';
 import * as store from '../store/gameStore';
 import { BLADE_MASTERS } from '../data/blademasters';
-import { RARITY_LABELS, RARITY_ICONS, RARITY_COLORS, CLASS_LABELS } from '../types';
+import { RARITY_LABELS, CLASS_LABELS } from '../types';
 import type { Rarity, BladeMaster } from '../types';
+import { Coins, Target, Gift, Flame, Swords, Zap, ChevronLeft, ClassIcon, RarityDot } from './Icons';
 
 export function SelectPage() {
   useStore();
@@ -31,7 +32,7 @@ export function SelectPage() {
   return (
     <div className="page">
       <div className="top-bar">
-        <button className="btn-back" onClick={() => store.navigate('beast')}>← 返回</button>
+        <button className="btn-back" onClick={() => store.navigate('beast')}><ChevronLeft size={18} /> 返回</button>
         <span className="page-title">選擇刀客</span>
       </div>
 
@@ -47,10 +48,11 @@ export function SelectPage() {
             <button
               key={r}
               className={`tab ${activeTab === r ? 'active' : ''}`}
-              style={{ borderColor: activeTab === r ? RARITY_COLORS[r] : 'transparent', color: RARITY_COLORS[r] }}
+              data-rarity={r}
+              style={activeTab === r ? { borderColor: 'var(--r-color)' } : { borderColor: 'transparent' }}
               onClick={() => setActiveTab(r)}
             >
-              {RARITY_ICONS[r]} {RARITY_LABELS[r]}
+              <RarityDot rarity={r} size={8} /> {RARITY_LABELS[r]}
               <span className="tab-count">剩{rem}</span>
             </button>
           );
@@ -58,11 +60,11 @@ export function SelectPage() {
       </div>
 
       {/* Slot info bar */}
-      <div className="slot-info-bar" style={{ borderLeftColor: RARITY_COLORS[activeTab] }}>
-        <span>💰 {slotCfg.price} 元</span>
-        <span>🎯 權重 {slotCfg.weight}×<span className="info-hint">(數字越高越容易中大獎)</span></span>
-        <span>📦 {slotCfg.reward}</span>
-        <span>🔥 熔煉 {slotCfg.meltValue} 🪙</span>
+      <div className="slot-info-bar" data-rarity={activeTab} style={{ borderLeftColor: 'var(--r-color)' }}>
+        <span><Coins size={14} className="icon-inline" /> {slotCfg.price} 元</span>
+        <span><Target size={14} className="icon-inline" /> 權重 {slotCfg.weight}×<span className="info-hint">(數字越高越容易中大獎)</span></span>
+        <span><Gift size={14} className="icon-inline" /> {slotCfg.reward}</span>
+        <span><Flame size={14} className="icon-inline" /> 熔煉 {slotCfg.meltValue} 魂幣</span>
         <span className={remaining === 0 ? 'sold-out' : ''}>剩 {remaining} 格</span>
       </div>
 
@@ -77,14 +79,16 @@ export function SelectPage() {
             <div
               key={bm.id}
               className={`char-card ${!canSelect ? 'unavailable' : ''}`}
-              style={{ borderColor: RARITY_COLORS[bm.rarity] }}
+              data-rarity={bm.rarity}
               onClick={() => canSelect && setConfirmChar(bm)}
             >
-              <div className="char-emoji">{bm.emoji}</div>
+              <div className="char-icon-wrap">
+                <ClassIcon cls={bm.class} size={36} />
+              </div>
               <div className="char-name">{bm.name}</div>
               <div className="char-meta">
-                <span style={{ color: RARITY_COLORS[bm.rarity] }}>
-                  {RARITY_ICONS[bm.rarity]} {RARITY_LABELS[bm.rarity]}
+                <span>
+                  <RarityDot rarity={bm.rarity} size={8} /> {RARITY_LABELS[bm.rarity]}
                 </span>
                 <span> | {CLASS_LABELS[bm.class]}</span>
               </div>
@@ -103,22 +107,24 @@ export function SelectPage() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>確認入魂？</h2>
             <div className="confirm-char">
-              <div className="confirm-emoji">{confirmChar.emoji}</div>
-              <div className="confirm-name" style={{ color: RARITY_COLORS[confirmChar.rarity] }}>
-                {RARITY_ICONS[confirmChar.rarity]} {confirmChar.name}
+              <div className="confirm-icon" data-rarity={confirmChar.rarity}>
+                <ClassIcon cls={confirmChar.class} size={48} />
+              </div>
+              <div className="confirm-name" data-rarity={confirmChar.rarity}>
+                <RarityDot rarity={confirmChar.rarity} /> {confirmChar.name}
               </div>
               <div className="confirm-details">
-                <div>💰 {slotCfg.price} 元</div>
-                <div>🎁 確定掉落：{slotCfg.reward}</div>
-                <div>🎯 權重：{slotCfg.weight}×</div>
-                <div>🔥 熔煉：{slotCfg.meltValue} 🪙</div>
+                <div><Coins size={14} className="icon-inline" /> {slotCfg.price} 元</div>
+                <div><Gift size={14} className="icon-inline" /> 確定掉落：{slotCfg.reward}</div>
+                <div><Target size={14} className="icon-inline" /> 權重：{slotCfg.weight}×</div>
+                <div><Flame size={14} className="icon-inline" /> 熔煉：{slotCfg.meltValue} 魂幣</div>
               </div>
               <div className="helper-text" style={{ marginTop: 8 }}>
-                ⚡ 入魂後無法取消，掉落品確定獲得
+                <Zap size={14} className="icon-inline" /> 入魂後無法取消，掉落品確定獲得
               </div>
             </div>
             <div className="modal-actions">
-              <button className="btn btn-primary" onClick={handleConfirm}>⚔️ 入魂！</button>
+              <button className="btn btn-primary" onClick={handleConfirm}><Swords size={16} className="icon-inline" /> 入魂！</button>
               <button className="btn btn-secondary" onClick={() => setConfirmChar(null)}>取消</button>
             </div>
           </div>

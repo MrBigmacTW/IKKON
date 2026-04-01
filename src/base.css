@@ -1,0 +1,93 @@
+/* ═══════════════════════════════════════════════
+   IKKON Base — Reset, Body, Layout, Utilities
+   ═══════════════════════════════════════════════ */
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── Body ── */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(233, 69, 96, 0.04) 0%, transparent 50%),
+    var(--slash-texture),
+    var(--noise-texture);
+}
+
+/* ── Root Shell ── */
+#root {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Page Layout ── */
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-lg);
+  gap: var(--space-lg);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: var(--radius-sm); }
+
+/* ── Typography Utilities ── */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.gold { color: var(--gold); font-weight: var(--weight-bold); }
+
+/* ── Icon Utilities ── */
+.icon-inline {
+  display: inline-block;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+
+/* ── Rarity Dot (CSS-only, driven by data-rarity on parent or self) ── */
+.rarity-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--r-color, var(--rarity-common));
+  box-shadow: 0 0 var(--shadow-glow-sm) var(--r-glow, transparent);
+  flex-shrink: 0;
+}
+
+.rarity-dot[data-rarity="legend"] {
+  box-shadow: 0 0 6px var(--rarity-legend);
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

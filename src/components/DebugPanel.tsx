@@ -3,6 +3,7 @@ import { useStore } from '../hooks/useStore';
 import * as store from '../store/gameStore';
 import { RARITY_LABELS } from '../types';
 import type { Rarity } from '../types';
+import { Wrench } from './Icons';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(true);
@@ -36,7 +37,7 @@ export function DebugPanel() {
   return (
     <div className="debug-panel">
       <div className="debug-header">
-        <span>🛠️ Debug Panel</span>
+        <span><Wrench size={14} className="icon-inline" /> Debug Panel</span>
         <button className="debug-close" onClick={store.toggleDebug}>×</button>
       </div>
 

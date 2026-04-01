@@ -1,15 +1,17 @@
 import * as store from '../store/gameStore';
+import { FileText, Swords, Package, Flame, Clock, ChevronLeft } from './Icons';
+import { RarityDot } from './Icons';
 
 export function RulesPage() {
   return (
     <div className="page rules-page">
       <div className="top-bar">
-        <button className="btn-back" onClick={() => store.navigate('home')}>← 返回</button>
-        <span className="page-title">📋 規則與機率</span>
+        <button className="btn-back" onClick={() => store.navigate('home')}><ChevronLeft size={18} /> 返回</button>
+        <span className="page-title"><FileText size={18} className="icon-inline" /> 規則與機率</span>
       </div>
 
       <div className="rules-content">
-        <h2>⚔️ 一刀入魂 — 遊戲規則</h2>
+        <h2><Swords size={20} className="icon-inline" /> 一刀入魂 — 遊戲規則</h2>
 
         <section className="rules-section">
           <h3>【基本規則】</h3>
@@ -24,20 +26,20 @@ export function RulesPage() {
         <section className="rules-section">
           <h3>【稀有度與權重】</h3>
           <div className="rules-table">
-            <div className="rules-row">
-              <span style={{ color: '#8B8B8B' }}>⚪ 凡（99元）</span>
+            <div className="rules-row" data-rarity="common">
+              <span><RarityDot rarity="common" /> 凡（99元）</span>
               <span>權重 1.0×</span>
             </div>
-            <div className="rules-row">
-              <span style={{ color: '#60A5FA' }}>🔵 銳（129元）</span>
+            <div className="rules-row" data-rarity="rare">
+              <span><RarityDot rarity="rare" /> 銳（129元）</span>
               <span>權重 1.1×</span>
             </div>
-            <div className="rules-row">
-              <span style={{ color: '#A78BFA' }}>🟣 魂（149元）</span>
+            <div className="rules-row" data-rarity="epic">
+              <span><RarityDot rarity="epic" /> 魂（149元）</span>
               <span>權重 1.2×</span>
             </div>
-            <div className="rules-row">
-              <span style={{ color: '#FBBF24' }}>🟡 神（179元）</span>
+            <div className="rules-row" data-rarity="legend">
+              <span><RarityDot rarity="legend" /> 神（179元）</span>
               <span>權重 1.35×</span>
             </div>
           </div>
@@ -55,9 +57,9 @@ export function RulesPage() {
         <section className="rules-section">
           <h3>【掉落品處理】</h3>
           <ul>
-            <li>📦 領取實物：填寫收件地址。</li>
-            <li>🔥 熔煉為魂幣：立即入帳。</li>
-            <li>⏱️ 24 小時內未選擇自動熔煉。</li>
+            <li><Package size={14} className="icon-inline" /> 領取實物：填寫收件地址。</li>
+            <li><Flame size={14} className="icon-inline" /> 熔煉為魂幣：立即入帳。</li>
+            <li><Clock size={14} className="icon-inline" /> 24 小時內未選擇自動熔煉。</li>
           </ul>
         </section>
 

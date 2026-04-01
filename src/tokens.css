@@ -1,0 +1,129 @@
+/* ═══════════════════════════════════════════════
+   IKKON Design Tokens
+   武俠刀劍 × 格鬥 HUD
+   ═══════════════════════════════════════════════ */
+
+:root {
+  /* ── Color: Background ── */
+  --bg:          #0c0c18;
+  --bg-surface:  #111122;
+  --card-bg:     #151528;
+  --card-border: rgba(255, 255, 255, 0.06);
+
+  /* ── Color: Brand ── */
+  --primary:       #e94560;
+  --primary-hover:  #ff5a75;
+  --primary-muted:  rgba(233, 69, 96, 0.15);
+  --secondary:     #1a1a38;
+  --accent:        #c9a84c;
+
+  /* ── Color: Semantic ── */
+  --gold:     #f5c542;
+  --positive: #34d399;
+  --negative: #f87171;
+  --warning:  #fb923c;
+
+  /* ── Color: Text ── */
+  --text:       #e8e8f0;
+  --text-mid:   #a0a0b8;
+  --text-dim:   #5c5c78;
+
+  /* ── Color: Rarity ── */
+  --rarity-common:  #8b8b8b;
+  --rarity-rare:    #60a5fa;
+  --rarity-epic:    #a78bfa;
+  --rarity-legend:  #fbbf24;
+
+  --rarity-common-glow:  transparent;
+  --rarity-rare-glow:    rgba(96, 165, 250, 0.25);
+  --rarity-epic-glow:    rgba(167, 139, 250, 0.3);
+  --rarity-legend-glow:  rgba(251, 191, 36, 0.35);
+
+  /* ── Spacing (4px base) ── */
+  --space-2xs: 2px;
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  12px;
+  --space-lg:  16px;
+  --space-xl:  24px;
+  --space-2xl: 32px;
+
+  /* ── Radius: blade-edge (sharp, max 6px) ── */
+  --radius-xs:  2px;
+  --radius-sm:  3px;
+  --radius-md:  4px;
+  --radius-lg:  6px;
+
+  /* ── Typography ── */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-serif:   'Noto Serif TC', 'Songti SC', serif;
+  --font-body:    'Noto Sans TC', system-ui, -apple-system, sans-serif;
+  --font-mono:    'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+
+  --text-2xs: 10px;
+  --text-xs:  11px;
+  --text-sm:  13px;
+  --text-base: 15px;
+  --text-lg:  18px;
+  --text-xl:  22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
+
+  --leading-tight:  1.2;
+  --leading-normal: 1.5;
+  --leading-loose:  1.7;
+
+  --weight-normal:  400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+  --weight-black:   900;
+
+  /* ── Borders ── */
+  --border-subtle:  1px solid rgba(255, 255, 255, 0.06);
+  --border-dim:     1px solid rgba(255, 255, 255, 0.1);
+  --border-accent:  1px solid var(--primary);
+
+  /* ── Shadows ── */
+  --shadow-card:    0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-lifted:  0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-glow-sm: 0 0 8px;
+  --shadow-glow-md: 0 0 16px;
+
+  /* ── Z-Index Scale ── */
+  --z-base:     0;
+  --z-card:     1;
+  --z-sticky:   10;
+  --z-overlay:  100;
+  --z-modal:    200;
+  --z-toast:    300;
+  --z-debug:    999;
+
+  /* ── Transitions ── */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:   100ms;
+  --dur-normal: 200ms;
+  --dur-slow:   400ms;
+
+  /* ── Textures ── */
+  --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  --slash-texture: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='6' x2='6' y2='0' stroke='rgba(255,255,255,0.025)' stroke-width='0.5'/%3E%3C/svg%3E");
+}
+
+
+/* ═══════════════════════════════════════════════
+   Data-attribute Rarity System
+   Usage: <div data-rarity="epic"> — auto color
+   ═══════════════════════════════════════════════ */
+
+[data-rarity="common"] { --r-color: var(--rarity-common); --r-glow: var(--rarity-common-glow); color: var(--r-color); }
+[data-rarity="rare"]   { --r-color: var(--rarity-rare);   --r-glow: var(--rarity-rare-glow);   color: var(--r-color); }
+[data-rarity="epic"]   { --r-color: var(--rarity-epic);   --r-glow: var(--rarity-epic-glow);   color: var(--r-color); }
+[data-rarity="legend"] { --r-color: var(--rarity-legend); --r-glow: var(--rarity-legend-glow); color: var(--r-color); }
+
+/* Border color inherits rarity on cards */
+[data-rarity].char-card,
+[data-rarity].inv-card   { border-color: var(--r-color); }
+[data-rarity] .slot-label { color: var(--r-color); }
+[data-rarity] .slot-icon  { color: var(--r-color); }
