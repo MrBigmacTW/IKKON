@@ -1,10 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useStore } from '../hooks/useStore';
 import * as store from '../store/gameStore';
 import { BLADE_MASTERS } from '../data/blademasters';
 import { RARITY_LABELS, CLASS_LABELS } from '../types';
 import type { Rarity, BladeMaster } from '../types';
 import { Coins, Target, Gift, Flame, Swords, Zap, ChevronLeft, ClassIcon, RarityDot } from './Icons';
+
+/* ── Lazy video: only loads & plays when visible in viewport ── */
+function CharVideo({ src, className }: { src: string; className: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) { el.play().catch(() => {}); }
+        else { el.pause(); }
+      },
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return <video ref={ref} src={src} preload="none" muted loop playsInline className={className} />;
+}
 
 /* ── Character video assets ── */
 const CHARACTER_VIDEOS: Record<string, string> = {
@@ -125,14 +144,7 @@ export function SelectPage() {
               {/* Media area — video if available, icon placeholder otherwise */}
               <div className="char-media">
                 {video ? (
-                  <video
-                    src={video}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="char-media-video"
-                  />
+                  <CharVideo src={video} className="char-media-video" />
                 ) : (
                   <div className="char-media-placeholder">
                     <ClassIcon cls={bm.class} size={40} />
