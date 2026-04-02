@@ -5,8 +5,18 @@ import './base.css'
 import './components.css'
 import App from './App.tsx'
 
-createRoot(document.getElementById('root')!).render(
+const root = createRoot(document.getElementById('root')!)
+root.render(
   <StrictMode>
     <App />
   </StrictMode>,
 )
+
+// Fade out loading splash after React paints
+requestAnimationFrame(() => {
+  const splash = document.getElementById('app-loading')
+  if (splash) {
+    splash.classList.add('fade-out')
+    setTimeout(() => splash.remove(), 420)
+  }
+})
