@@ -5,3 +5,8 @@ dist/
 *.local
 .DS_Store
 .skills/
+.agents/
+.trae/
+.claude/skills/
+skills/
+skills-lock.json

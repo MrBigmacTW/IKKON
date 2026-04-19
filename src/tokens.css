@@ -1,43 +1,56 @@
 /* ═══════════════════════════════════════════════
    IKKON Design Tokens
-   武俠刀劍 × 格鬥 HUD
+   奇幻魔法 × 哈利波特氛圍
+   Deep midnight blue + warm amber candlelight
    ═══════════════════════════════════════════════ */
 
 :root {
-  /* ── Color: Background ── */
-  --bg:          #0c0c18;
-  --bg-surface:  #111122;
-  --card-bg:     #151528;
-  --card-border: rgba(255, 255, 255, 0.06);
+  /* ── Color: Background (deep midnight, never pure black) ── */
+  --bg:           #0e0a26;      /* deep night sky */
+  --bg-deep:      #07041a;      /* deeper void for layering */
+  --bg-surface:   #15103a;      /* parchment-tinted midnight */
+  --card-bg:      #1c1545;      /* aged tome cover */
+  --card-bg-hi:   #251d55;      /* lifted card hover */
+  --card-border:  rgba(240, 180, 41, 0.18);
 
-  /* ── Color: Brand ── */
-  --primary:       #e94560;
-  --primary-hover:  #ff5a75;
-  --primary-muted:  rgba(233, 69, 96, 0.15);
-  --secondary:     #1a1a38;
-  --accent:        #c9a84c;
+  /* ── Color: Brand (warm magical) ── */
+  --primary:        #f0b429;    /* enchanted candle gold */
+  --primary-hover:  #ffc94a;
+  --primary-deep:   #c8941b;
+  --primary-muted:  rgba(240, 180, 41, 0.18);
+  --primary-glow:   rgba(240, 180, 41, 0.45);
+
+  --secondary:      #7c6df0;    /* spell violet-blue */
+  --secondary-hover:#9988ff;
+  --secondary-muted:rgba(124, 109, 240, 0.2);
+  --secondary-glow: rgba(124, 109, 240, 0.4);
+
+  --accent:         #d4a574;    /* warm parchment */
+  --accent-deep:    #8b6f47;    /* aged ink */
 
   /* ── Color: Semantic ── */
-  --gold:     #f5c542;
-  --positive: #34d399;
-  --negative: #f87171;
-  --warning:  #fb923c;
+  --gold:     #ffd152;          /* phoenix gold */
+  --positive: #6ee7b7;          /* mint magic */
+  --negative: #f87171;          /* curse red */
+  --warning:  #fb923c;          /* potion orange */
+  --magic:    #c084fc;          /* arcane glow */
 
-  /* ── Color: Text ── */
-  --text:       #e8e8f0;
-  --text-mid:   #a0a0b8;
-  --text-dim:   #5c5c78;
+  /* ── Color: Text (warm cream, not cold white) ── */
+  --text:       #f5f0e8;        /* warm parchment cream */
+  --text-mid:   #b8b0c8;        /* faded ink */
+  --text-dim:   #6b5e8c;        /* muted purple-grey */
+  --text-faint: #4a3f6b;
 
-  /* ── Color: Rarity ── */
-  --rarity-common:  #8b8b8b;
-  --rarity-rare:    #60a5fa;
-  --rarity-epic:    #a78bfa;
-  --rarity-legend:  #fbbf24;
+  /* ── Color: Rarity (magical materials) ── */
+  --rarity-common:  #a89a8e;    /* aged silver */
+  --rarity-rare:    #6b9bd8;    /* moonstone blue */
+  --rarity-epic:    #b794e6;    /* arcane violet */
+  --rarity-legend:  #ffd152;    /* phoenix gold */
 
-  --rarity-common-glow:  transparent;
-  --rarity-rare-glow:    rgba(96, 165, 250, 0.25);
-  --rarity-epic-glow:    rgba(167, 139, 250, 0.3);
-  --rarity-legend-glow:  rgba(251, 191, 36, 0.35);
+  --rarity-common-glow:  rgba(168, 154, 142, 0.25);
+  --rarity-rare-glow:    rgba(107, 155, 216, 0.4);
+  --rarity-epic-glow:    rgba(183, 148, 230, 0.45);
+  --rarity-legend-glow:  rgba(255, 209, 82, 0.55);
 
   /* ── Spacing (4px base) ── */
   --space-2xs: 2px;
@@ -47,18 +60,24 @@
   --space-lg:  16px;
   --space-xl:  24px;
   --space-2xl: 32px;
+  --space-3xl: 48px;
 
-  /* ── Radius: blade-edge (sharp, max 6px) ── */
-  --radius-xs:  2px;
-  --radius-sm:  3px;
-  --radius-md:  4px;
-  --radius-lg:  6px;
+  /* ── Radius (slightly softer — aged book corners) ── */
+  --radius-xs:  3px;
+  --radius-sm:  5px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-pill: 999px;
 
   /* ── Typography ── */
-  --font-display: 'Bebas Neue', 'Impact', sans-serif;
-  --font-serif:   'Noto Serif TC', 'Songti SC', serif;
-  --font-body:    'Noto Sans TC', system-ui, -apple-system, sans-serif;
-  --font-mono:    'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  --font-display:  'Cinzel', 'Noto Serif TC', serif;
+  --font-magical:  'Cinzel Decorative', 'Cinzel', serif;
+  --font-serif:    'Cormorant Garamond', 'Noto Serif TC', serif;
+  --font-cn-title: 'Noto Serif TC', 'Songti SC', serif;
+  --font-body:     'Noto Sans TC', system-ui, -apple-system, sans-serif;
+  --font-hud:      'Bebas Neue', 'Impact', sans-serif;
+  --font-mono:     'SF Mono', 'Cascadia Code', 'Consolas', monospace;
 
   --text-2xs: 10px;
   --text-xs:  11px;
@@ -68,6 +87,7 @@
   --text-xl:  22px;
   --text-2xl: 28px;
   --text-3xl: 36px;
+  --text-4xl: 48px;
 
   --leading-tight:  1.2;
   --leading-normal: 1.5;
@@ -78,18 +98,28 @@
   --weight-bold:    700;
   --weight-black:   900;
 
+  --tracking-tight:  -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.05em;
+  --tracking-wider:  0.12em;
+  --tracking-widest: 0.2em;
+
   /* ── Borders ── */
   --border-subtle:  1px solid rgba(255, 255, 255, 0.06);
-  --border-dim:     1px solid rgba(255, 255, 255, 0.1);
+  --border-dim:     1px solid rgba(240, 180, 41, 0.12);
+  --border-gold:    1px solid rgba(240, 180, 41, 0.35);
   --border-accent:  1px solid var(--primary);
 
-  /* ── Shadows ── */
-  --shadow-card:    0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-lifted:  0 4px 12px rgba(0, 0, 0, 0.5);
+  /* ── Shadows (warm magical glow) ── */
+  --shadow-card:    0 2px 8px rgba(7, 4, 26, 0.5);
+  --shadow-lifted:  0 8px 24px rgba(7, 4, 26, 0.7);
+  --shadow-deep:    0 12px 40px rgba(7, 4, 26, 0.85);
   --shadow-glow-sm: 0 0 8px;
-  --shadow-glow-md: 0 0 16px;
+  --shadow-glow-md: 0 0 18px;
+  --shadow-glow-lg: 0 0 32px;
+  --shadow-inner:   inset 0 1px 0 rgba(240, 180, 41, 0.08);
 
-  /* ── Z-Index Scale ── */
+  /* ── Z-Index ── */
   --z-base:     0;
   --z-card:     1;
   --z-sticky:   10;
@@ -102,19 +132,25 @@
   --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in:    cubic-bezier(0.55, 0, 1, 0.45);
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --dur-fast:   100ms;
-  --dur-normal: 200ms;
-  --dur-slow:   400ms;
+  --ease-magic: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:   150ms;
+  --dur-normal: 280ms;
+  --dur-slow:   500ms;
+  --dur-magical: 800ms;
 
-  /* ── Textures ── */
-  --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  --slash-texture: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='6' x2='6' y2='0' stroke='rgba(255,255,255,0.025)' stroke-width='0.5'/%3E%3C/svg%3E");
+  /* ── Magical Textures ──
+     Parchment grain + soft starfield, all warmly tinted */
+  --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.94 0 0 0 0 0.71 0 0 0 0 0.16 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  --parchment-texture: url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.65 0 0 0 0 0.25 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23p)'/%3E%3C/svg%3E");
+
+  --starfield-texture: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='40' cy='80' r='0.6' opacity='0.5'/%3E%3Ccircle cx='150' cy='40' r='0.4' opacity='0.4'/%3E%3Ccircle cx='280' cy='120' r='0.7' opacity='0.55'/%3E%3Ccircle cx='420' cy='60' r='0.5' opacity='0.4'/%3E%3Ccircle cx='540' cy='180' r='0.8' opacity='0.6'/%3E%3Ccircle cx='80' cy='220' r='0.5' opacity='0.45'/%3E%3Ccircle cx='200' cy='300' r='0.6' opacity='0.5'/%3E%3Ccircle cx='360' cy='280' r='0.4' opacity='0.35'/%3E%3Ccircle cx='480' cy='340' r='0.7' opacity='0.55'/%3E%3Ccircle cx='100' cy='400' r='0.5' opacity='0.4'/%3E%3Ccircle cx='250' cy='450' r='0.6' opacity='0.5'/%3E%3Ccircle cx='390' cy='480' r='0.5' opacity='0.45'/%3E%3Ccircle cx='510' cy='510' r='0.7' opacity='0.55'/%3E%3Ccircle cx='40' cy='540' r='0.4' opacity='0.4'/%3E%3Ccircle cx='180' cy='560' r='0.6' opacity='0.5'/%3E%3C/g%3E%3Cg fill='%23ffd152'%3E%3Ccircle cx='320' cy='200' r='0.8' opacity='0.55'/%3E%3Ccircle cx='460' cy='420' r='0.7' opacity='0.5'/%3E%3Ccircle cx='130' cy='340' r='0.6' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 
 /* ═══════════════════════════════════════════════
    Data-attribute Rarity System
-   Usage: <div data-rarity="epic"> — auto color
+   <div data-rarity="epic"> — auto color cascade
    ═══════════════════════════════════════════════ */
 
 [data-rarity="common"] { --r-color: var(--rarity-common); --r-glow: var(--rarity-common-glow); color: var(--r-color); }
@@ -122,8 +158,9 @@
 [data-rarity="epic"]   { --r-color: var(--rarity-epic);   --r-glow: var(--rarity-epic-glow);   color: var(--r-color); }
 [data-rarity="legend"] { --r-color: var(--rarity-legend); --r-glow: var(--rarity-legend-glow); color: var(--r-color); }
 
-/* Border color inherits rarity on cards */
+/* Border + glow inherits rarity on cards */
 [data-rarity].char-card,
-[data-rarity].inv-card   { border-color: var(--r-color); }
-[data-rarity] .slot-label { color: var(--r-color); }
-[data-rarity] .slot-icon  { color: var(--r-color); }
+[data-rarity].inv-card     { border-color: var(--r-color); }
+[data-rarity].char-card    { box-shadow: 0 0 0 1px var(--r-glow), var(--shadow-card); }
+[data-rarity] .slot-label  { color: var(--r-color); }
+[data-rarity] .slot-icon   { color: var(--r-color); }

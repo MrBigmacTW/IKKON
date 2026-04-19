@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════
    IKKON Base — Reset, Body, Layout, Utilities
+   奇幻魔法 ─ deep midnight + warm candlelight
    ═══════════════════════════════════════════════ */
 
 /* ── Reset ── */
@@ -9,7 +10,7 @@
   box-sizing: border-box;
 }
 
-/* ── Body ── */
+/* ── Body — magical midnight with starfield + candlelight glow ── */
 body {
   background: var(--bg);
   color: var(--text);
@@ -20,9 +21,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(233, 69, 96, 0.04) 0%, transparent 50%),
-    var(--slash-texture),
-    var(--noise-texture);
+    /* Warm candlelight pooling at top */
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(240, 180, 41, 0.08) 0%, transparent 60%),
+    /* Cooler spell glow at bottom */
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(124, 109, 240, 0.06) 0%, transparent 60%),
+    /* Drifting starfield */
+    var(--starfield-texture),
+    /* Parchment grain */
+    var(--parchment-texture),
+    /* Base deep midnight */
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  background-attachment: fixed;
+  background-size: auto, auto, 600px 600px, 400px 400px, auto;
+  background-repeat: no-repeat, no-repeat, repeat, repeat, no-repeat;
 }
 
 /* ── Root Shell ── */
@@ -32,6 +43,30 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Soft vertical edges so the 480px feels intentional, like a magical scroll */
+#root::before,
+#root::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  pointer-events: none;
+  z-index: var(--z-sticky);
+}
+#root::before {
+  left: calc(50% - 240px - 24px);
+  background: linear-gradient(to right, transparent, rgba(7, 4, 26, 0.6));
+}
+#root::after {
+  right: calc(50% - 240px - 24px);
+  background: linear-gradient(to left, transparent, rgba(7, 4, 26, 0.6));
+}
+@media (max-width: 528px) {
+  #root::before, #root::after { display: none; }
 }
 
 /* ── Page Layout ── */
@@ -41,25 +76,56 @@ body {
   flex-direction: column;
   padding: var(--space-lg);
   gap: var(--space-lg);
+  position: relative;
 }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: var(--radius-sm); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary-deep), var(--secondary));
+  border-radius: var(--radius-sm);
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--primary-muted);
+  color: var(--primary);
+}
 
 /* ── Typography Utilities ── */
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
+}
+
+.font-magical {
+  font-family: var(--font-magical);
+  letter-spacing: var(--tracking-wide);
 }
 
 .font-serif {
   font-family: var(--font-serif);
+  letter-spacing: var(--tracking-tight);
 }
 
-.gold { color: var(--gold); font-weight: var(--weight-bold); }
+.font-cn-title {
+  font-family: var(--font-cn-title);
+  letter-spacing: 0.08em;
+  font-weight: var(--weight-bold);
+}
+
+.font-hud {
+  font-family: var(--font-hud);
+  letter-spacing: var(--tracking-wide);
+}
+
+.gold {
+  color: var(--gold);
+  font-weight: var(--weight-bold);
+  text-shadow: 0 0 12px rgba(255, 209, 82, 0.35);
+}
 
 /* ── Icon Utilities ── */
 .icon-inline {
@@ -75,12 +141,36 @@ body {
   height: 10px;
   border-radius: 50%;
   background: var(--r-color, var(--rarity-common));
-  box-shadow: 0 0 var(--shadow-glow-sm) var(--r-glow, transparent);
+  box-shadow: 0 0 6px var(--r-glow, transparent), inset 0 0 2px rgba(255, 255, 255, 0.4);
   flex-shrink: 0;
 }
 
 .rarity-dot[data-rarity="legend"] {
-  box-shadow: 0 0 6px var(--rarity-legend);
+  box-shadow: 0 0 10px var(--rarity-legend), inset 0 0 3px rgba(255, 255, 255, 0.6);
+  animation: legend-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes legend-pulse {
+  0%, 100% { box-shadow: 0 0 10px var(--rarity-legend), inset 0 0 3px rgba(255, 255, 255, 0.6); }
+  50%      { box-shadow: 0 0 18px var(--rarity-legend), inset 0 0 4px rgba(255, 255, 255, 0.85); }
+}
+
+/* ── Magical floating particle keyframes (used by component animations) ── */
+@keyframes mote-float {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(-40px) translateX(8px); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 6px var(--primary-glow)); }
+  50%      { filter: brightness(1.15) drop-shadow(0 0 14px var(--primary-glow)); }
 }
 
 /* ── Reduced Motion ── */
